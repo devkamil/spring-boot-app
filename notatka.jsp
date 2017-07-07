@@ -8,10 +8,10 @@
 </head>
 <body>
 	<p>Zapisana notatka: </p>
-	<p>Temat: <%= request.getAttribute("title") %></p>
-	<p>Treść notatki: <%= request.getAttribute("content") %></p>
-	<p>Autor: <%= request.getAttribute("author") %></p>
-	<p>Data: <%= request.getAttribute("date") %></p>
+	<p>Temat: ${requestScope.title}</p>
+	<p>Treść notatki: ${requestScope.content}</p>
+	<p>Autor: ${author}</p>
+	<p>Data: ${date}</p>
 	
 	<a href="index.jsp">Powrót</a>
 

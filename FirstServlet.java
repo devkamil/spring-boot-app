@@ -1,11 +1,8 @@
 package pl.devkamil;
 
 import java.io.IOException;
-import java.io.PrintWriter;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
 import java.util.Date;
 
 import javax.servlet.ServletException;
@@ -33,26 +30,23 @@ public class FirstServlet extends HttpServlet {
 	
     
     protected void firstServlet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+    	
     	response.setContentType("text/html;charset=UTF-8");
-    	PrintWriter writer = response.getWriter();
-    	try{
-    		String title = request.getParameter("title");
-    		String content = request.getParameter("content");
-    		String author = request.getParameter("author");
-    		Date date = new Date();
-    		String currentDate = dateFormat.format(date);  		
+    	  		
+    	String title = request.getParameter("title");
+    	String content = request.getParameter("content");
+    	String author = request.getParameter("author");
+    	Date date = new Date();
+    	String currentDate = dateFormat.format(date);  		
     		
-    		request.setAttribute("title", title);
-    		request.setAttribute("content", content);
-    		request.setAttribute("author", author);
-    		request.setAttribute("date", currentDate);
+    	request.setAttribute("title", title);
+    	request.setAttribute("content", content);
+    	request.setAttribute("author", author);
+    	request.setAttribute("date", currentDate);
+
+    	request.getRequestDispatcher("/notatka.jsp").forward(request, response);
     		
-    		
-    		request.getRequestDispatcher("/notatka.jsp").forward(request, response);
-    		
-    	}finally{
-    		writer.close();
-    	}
+    	
    }
         
 	/**
