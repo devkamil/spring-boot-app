@@ -4,6 +4,8 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.Date;
 
 import javax.servlet.ServletException;
@@ -24,14 +26,7 @@ import javax.servlet.http.HttpServletResponse;
 		})
 public class FirstServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-	private static final DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:ss");
-
-    /**
-     * Default constructor. 
-     */
-//    public FirstServlet() {
-//        // TODO Auto-generated constructor stub
-//    }
+	private static final DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm");
 
 	
 	
@@ -41,28 +36,25 @@ public class FirstServlet extends HttpServlet {
     	response.setContentType("text/html;charset=UTF-8");
     	PrintWriter writer = response.getWriter();
     	try{
-    		String topic = request.getParameter("topic");
+    		String title = request.getParameter("title");
     		String content = request.getParameter("content");
     		String author = request.getParameter("author");
     		Date date = new Date();
-    		String currentDate = dateFormat.format(date);
+    		String currentDate = dateFormat.format(date);  		
     		
-    		writer.println("<html>");
-    		writer.println("<head>");
-    		writer.println("<title>My First Servlet-Servlet-Servlet!</title>");
-    		writer.println("</head>");
-    		writer.println("<body>");
-    		writer.println("<h1>Temat: " + topic +  "</h1>");
-    		writer.println("<h1>Treść: " + content +  "</h1>");
-    		writer.println("<h1>Autor: " + author +  "</h1>");
-    		writer.println("<h1>Data: " + currentDate +  "</h1>");
-    		writer.println("</body>");
-    		writer.println("</html>");
+    		request.setAttribute("title", title);
+    		request.setAttribute("content", content);
+    		request.setAttribute("author", author);
+    		request.setAttribute("date", currentDate);
+    		
+    		
+    		request.getRequestDispatcher("/notatka.jsp").forward(request, response);
     		
     	}finally{
     		writer.close();
     	}
    }
+        
 	/**
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */

@@ -11,10 +11,9 @@
 	<h1>My First Servlet!</h1>
 	<form action="FirstServlet.do">
 		<p>Temat:</p>
-		<input type="text" name="topic" />
+		<input type="text" name="title" />
 		<p>Treść notatki:</p>
-		<textarea rows="4" cols="50" name="content">
-		Treść notatki...</textarea>
+		<textarea rows="4" cols="20" name="content">Treść notatki...</textarea>
 		<p>Autor:</p>
 		<input type="text" name="author" /><br /><br />
 		<input type="submit" value="OK" />
