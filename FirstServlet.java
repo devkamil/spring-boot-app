@@ -24,6 +24,7 @@ import javax.servlet.http.HttpServletResponse;
 		})
 public class FirstServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
+	private static final DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:ss");
 
     /**
      * Default constructor. 
@@ -33,8 +34,7 @@ public class FirstServlet extends HttpServlet {
 //    }
 
 	
-	DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:ss");
-	Date date = new Date();
+	
 	
     
     protected void firstServlet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -44,6 +44,7 @@ public class FirstServlet extends HttpServlet {
     		String topic = request.getParameter("topic");
     		String content = request.getParameter("content");
     		String author = request.getParameter("author");
+    		Date date = new Date();
     		String currentDate = dateFormat.format(date);
     		
     		writer.println("<html>");
