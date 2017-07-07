@@ -8,10 +8,10 @@
 </head>
 <body>
 	<p>Zapisana notatka: </p>
-	<p>Temat: ${requestScope.title}</p>
-	<p>Treść notatki: ${requestScope.content}</p>
-	<p>Autor: ${author}</p>
-	<p>Data: ${date}</p>
+	<p>Temat: ${notes.title}</p>
+	<p>Treść notatki: ${notes.content}</p>
+	<p>Autor: ${notes.author}</p>
+	<p>Data: ${notes.date}</p>
 	
 	<a href="index.jsp">Powrót</a>
 

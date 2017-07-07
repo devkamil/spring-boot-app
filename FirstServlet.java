@@ -33,20 +33,20 @@ public class FirstServlet extends HttpServlet {
     	
     	response.setContentType("text/html;charset=UTF-8");
     	  		
-    	String title = request.getParameter("title");
-    	String content = request.getParameter("content");
-    	String author = request.getParameter("author");
-    	Date date = new Date();
-    	String currentDate = dateFormat.format(date);  		
-    		
-    	request.setAttribute("title", title);
-    	request.setAttribute("content", content);
-    	request.setAttribute("author", author);
-    	request.setAttribute("date", currentDate);
+		Note note = new Note();
+		note.setTitle(request.getParameter("title"));
+		note.setContent(request.getParameter("content"));
+		note.setAuthor(request.getParameter("author"));
+	
+		
+		Date date = new Date();
+		String currentDate = dateFormat.format(date);
+		note.setDate(currentDate);
+		
+		request.setAttribute("notes", note);
+		
+		request.getRequestDispatcher("/notatka.jsp").forward(request, response);
 
-    	request.getRequestDispatcher("/notatka.jsp").forward(request, response);
-    		
-    	
    }
         
 	/**
@@ -63,6 +63,9 @@ public class FirstServlet extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
 		firstServlet(request, response);
+		
+
+
 	}
 
 	public String getServletInfo() {
