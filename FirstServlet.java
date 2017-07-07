@@ -40,7 +40,7 @@ public class FirstServlet extends HttpServlet {
     		writer.println("<title>My First Servlet-Servlet-Servlet!</title>");
     		writer.println("</head>");
     		writer.println("<body>");
-    		writer.println("<h1>This is my first servlet! " + text +"</h1>");
+    		writer.println("<h1>This is my first servlet! " + text + ", " + text + "</h1>");
     		writer.println("</body>");
     		writer.println("</html>");
     		
