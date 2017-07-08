@@ -9,7 +9,7 @@
 <body>
 	
 	<h1>My First Servlet!</h1>
-	<form action="FirstServlet.do">
+	<form action="FirstServlet.do" method="post">
 		<p>Temat:</p>
 		<input type="text" name="title" />
 		<p>Treść notatki:</p>

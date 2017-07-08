@@ -14,6 +14,7 @@
 	<p>Data: ${notes.date}</p>
 	
 	<a href="index.jsp">Powrót</a>
+	
 
 </body>
 </html>
