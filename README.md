@@ -2,9 +2,11 @@
 
 # jak uruchomić aplikację
 
-*TODO - opisać sposób budowania i uruchamiania aplikacji*
+* Budowanie - z poziomu konsoli wywołać komendę ``mvn clean package`` w folderze z plikiem **pom.xml**
 
-# co w kolejnych wersjach
+* Wygenerowany plik **.war** umieścić na serwerze Tomcat
+
+# co w kolejnych wersjachh
 
 * v. 0.1 - aplikacja na serwletach, widok z formularzem z jednym polem, na następnej stronie podwojony komunikat
 * v. 0.2 - rozszerzenie do aplikacji "Notes", zmiana formularza na pierwszej stronie na formularz z polami do wpisywania tematu notatki, treści notatki oraz do wpisywania autora. Na drugiej stronie wyświetlenie wprowadzonej notatki (temat, autor, data wprowadzenia, treść).

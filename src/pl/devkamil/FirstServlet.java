@@ -1,8 +1,10 @@
 package pl.devkamil;
 
 import java.io.BufferedWriter;
-import java.io.FileWriter;
+import java.io.File;
+import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.OutputStreamWriter;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -25,7 +27,7 @@ public class FirstServlet extends HttpServlet {
 	protected void firstServlet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 
-		response.setContentType("text/html;charset=UTF-8");
+		request.setCharacterEncoding("UTF-8");
 
 		Note note = new Note();
 		note.setTitle(request.getParameter("title"));
@@ -40,15 +42,17 @@ public class FirstServlet extends HttpServlet {
 
 		fileWriter(note);
 
-		request.getRequestDispatcher("/notatka.jsp").forward(request, response);
-
+		request.getRequestDispatcher("/note.jsp").forward(request, response);
 	}
 
 	public void fileWriter(Note note) {
 		Date date = new Date();
 		String fileName = dateWriter.format(date);
 
-		try (BufferedWriter writer = new BufferedWriter(new FileWriter("note999_" + fileName + ".txt"));) {
+		File file = new File("C:\\Users\\DOM\\Desktop\\note_" + fileName + ".txt");
+
+		try (BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(file), "UTF-8"))) {
+
 			writer.write(note.toString());
 			writer.newLine();
 
@@ -56,7 +60,6 @@ public class FirstServlet extends HttpServlet {
 			e.printStackTrace();
 		}
 	}
-
 
 	/**
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse
