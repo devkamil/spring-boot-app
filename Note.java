@@ -3,6 +3,7 @@ package pl.devkamil;
 import java.io.Serializable;
 
 public class Note implements Serializable {
+	private static final long serialVersionUID = 1L;
 	
 	private String title;
 	private String content;
@@ -47,7 +48,8 @@ public class Note implements Serializable {
 	
 	@Override
 	public String toString() {
-		return "Tytuł: " + title + '\n' + "Treść notatki: " + content + '\n' + "Autor: " + author + '\n' + "Data: " + date;
+		return "Tytuł: " + title + "  " + '\n' + "Treść notatki: " + content + "  " + '\n' + "Autor: " + author + 
+				"  " + '\n' + "Data: " + date;
 	}
 	
 }

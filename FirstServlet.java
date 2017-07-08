@@ -1,5 +1,7 @@
 package pl.devkamil;
 
+import java.io.BufferedWriter;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
@@ -24,7 +26,7 @@ import javax.servlet.http.HttpServletResponse;
 public class FirstServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	private static final DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm");
-
+	private static final DateFormat dateWriter = new SimpleDateFormat("yyyy-MM-dd-HHmm");
 	
 	
 	
@@ -45,10 +47,29 @@ public class FirstServlet extends HttpServlet {
 		
 		request.setAttribute("notes", note);
 		
+		fileWriter(note);
+				
 		request.getRequestDispatcher("/notatka.jsp").forward(request, response);
 
-   }
-        
+   }      
+    
+    
+    public void fileWriter (Note note) {
+    	Date date = new Date();
+		String fileName = dateWriter.format(date);
+		
+		try(
+			BufferedWriter writer = new BufferedWriter(new FileWriter("note_"+fileName+".txt"));
+		){
+			writer.write(note.toString());
+			writer.newLine();
+		
+		}catch(IOException e){
+			e.printStackTrace();
+		}
+    }
+    
+    
 	/**
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
@@ -64,9 +85,9 @@ public class FirstServlet extends HttpServlet {
 		// TODO Auto-generated method stub
 		firstServlet(request, response);
 		
-
-
 	}
+		
+
 
 	public String getServletInfo() {
 		return "Short description";
