@@ -5,7 +5,7 @@
 
 * Wygenerowany plik **.war** umieścić na serwerze Tomcat
 
-# co w kolejnych wersjachh
+# co w kolejnych wersjach
 
 * v. 0.1 - aplikacja na serwletach, widok z formularzem z jednym polem, na następnej stronie podwojony komunikat
 * v. 0.2 - rozszerzenie do aplikacji "Notes", zmiana formularza na pierwszej stronie na formularz z polami do wpisywania tematu notatki, treści notatki oraz do wpisywania autora. Na drugiej stronie wyświetlenie wprowadzonej notatki (temat, autor, data wprowadzenia, treść).
