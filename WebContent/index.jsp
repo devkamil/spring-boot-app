@@ -11,7 +11,7 @@
 		var x = document.forms["blank"]["title"].value;
 		var y = document.forms["blank"]["content"].value;
 		var z = document.forms["blank"]["author"].value;
-		if ((x&&y&&z) == "") {
+		if (x=="" || y=="" || z == "") {
 			alert("Nie wypełnione wszystkie pola");
 			return false;
 		}
