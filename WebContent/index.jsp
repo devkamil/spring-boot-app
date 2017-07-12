@@ -11,18 +11,11 @@
 		var x = document.forms["blank"]["title"].value;
 		var y = document.forms["blank"]["content"].value;
 		var z = document.forms["blank"]["author"].value;
-		if (x == "") {
+		if ((x&&y&&z) == "") {
 			alert("Nie wypełnione wszystkie pola");
 			return false;
 		}
-		if (y == "") {
-			alert("Nie wypełnione wszystkie pola");
-			return false;
-		}
-		if (z == "") {
-			alert("Nie wypełnione wszystkie pola");
-			return false;
-		}
+
 
 	}
 </script>
