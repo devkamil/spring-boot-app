@@ -1,7 +1,7 @@
 package pl.devkamil;
 
-
 import java.io.IOException;
+
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -38,9 +38,11 @@ public class FirstServlet extends HttpServlet {
 
 		request.setAttribute("notes", note);
 
-
 		writerFile.fileWriter(note, date);
-
+		
+		noteManager.setup();
+		noteManager.create(note);
+		noteManager.exit();
 
 		request.getRequestDispatcher("/note.jsp").forward(request, response);
 	}
@@ -55,12 +57,6 @@ public class FirstServlet extends HttpServlet {
 		firstServlet(request, response);
 
 	}
-	
-//	protected void doGet(HttpServletRequest request, HttpServletResponse response)
-//			throws ServletException, IOException {
-//		// TODO Auto-generated method stub
-//		firstServlet(request, response);
-//	}
 
 	public String getServletInfo() {
 		return "Short description";
