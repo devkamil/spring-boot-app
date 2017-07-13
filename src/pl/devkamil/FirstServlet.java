@@ -1,10 +1,7 @@
 package pl.devkamil;
 
-import java.io.BufferedWriter;
-import java.io.File;
-import java.io.FileOutputStream;
+
 import java.io.IOException;
-import java.io.OutputStreamWriter;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -22,7 +19,8 @@ import javax.servlet.http.HttpServletResponse;
 public class FirstServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	private static final DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm");
-	private static final DateFormat dateWriter = new SimpleDateFormat("yyyy-MM-dd-HHmm");
+	WriterFile writerFile = new WriterFile();
+	NoteManager noteManager = new NoteManager();
 
 	protected void firstServlet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
@@ -40,25 +38,11 @@ public class FirstServlet extends HttpServlet {
 
 		request.setAttribute("notes", note);
 
-		fileWriter(note);
+
+		writerFile.fileWriter(note, date);
+
 
 		request.getRequestDispatcher("/note.jsp").forward(request, response);
-	}
-
-	public void fileWriter(Note note) {
-		Date date = new Date();
-		String fileName = dateWriter.format(date);
-
-		File file = new File("C:\\Users\\DOM\\Desktop\\note_" + fileName + ".txt");
-
-		try (BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(file), "UTF-8"))) {
-
-			writer.write(note.toString());
-			writer.newLine();
-
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
 	}
 
 	/**
@@ -71,6 +55,12 @@ public class FirstServlet extends HttpServlet {
 		firstServlet(request, response);
 
 	}
+	
+//	protected void doGet(HttpServletRequest request, HttpServletResponse response)
+//			throws ServletException, IOException {
+//		// TODO Auto-generated method stub
+//		firstServlet(request, response);
+//	}
 
 	public String getServletInfo() {
 		return "Short description";
