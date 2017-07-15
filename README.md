@@ -2,9 +2,9 @@
 # jak uruchomić aplikację
 
 * Wymagane jest istnienie bazy danych 'node_app' (CREATE DATABASE node_app), a następnie przejście do niej (USE node_app) i utworzenie tabeli 'note' poleceniem: 
-	CREATE TABLE note (note_id int NOT NULL AUTO_INCREMENT, title VARCHAR(128) NOT NULL,
+	``CREATE TABLE note (note_id int NOT NULL AUTO_INCREMENT, title VARCHAR(128) NOT NULL,
 	content VARCHAR(500) NOT NULL, author VARCHAR(64) NOT NULL, date VARCHAR(64) NOT NULL,
-	PRIMARY KEY (note_id) ) ENGINE=InnoDB;
+	PRIMARY KEY (note_id) ) ENGINE=InnoDB;``
 
 * Budowanie - z poziomu konsoli wywołać komendę ``mvn clean package`` w folderze z plikiem **pom.xml**
 
