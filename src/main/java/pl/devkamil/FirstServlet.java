@@ -1,10 +1,10 @@
 package pl.devkamil;
 
 import java.io.IOException;
-
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.List;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -15,7 +15,9 @@ import javax.servlet.http.HttpServletResponse;
 /**
  * Servlet implementation class FirstServlet
  */
-@WebServlet(name = "FirstServlet", urlPatterns = { "/FirstServlet", "/FirstServlet.do" })
+// @WebServlet(name = "FirstServlet", urlPatterns = { "/FirstServlet",
+// "/index.jsp" })
+@WebServlet("/index.jsp")
 public class FirstServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	private static final DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm");
@@ -39,8 +41,8 @@ public class FirstServlet extends HttpServlet {
 		request.setAttribute("notes", note);
 
 		writerFile.fileWriter(note, date);
-		
-		noteManager.setup();
+
+//		noteManager.setup();
 		noteManager.create(note);
 		noteManager.exit();
 
@@ -58,7 +60,34 @@ public class FirstServlet extends HttpServlet {
 
 	}
 
-	public String getServletInfo() {
-		return "Short description";
+	protected void doGet(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
+		// TODO Auto-generated method stub
+
+		String action = request.getParameter("action");
+
+		if ("show".equals(action)) {
+			String id = request.getParameter("id");
+			show(request, response, id);
+			return;
+		}
+
+		List<Note> allNote = noteManager.getAllNotes();
+		request.setAttribute("notes", allNote);
+		request.getRequestDispatcher("/WEB-INF/index.jsp").forward(request, response);
+
 	}
+
+	public void show(HttpServletRequest request, HttpServletResponse response, String id) {
+		Note n = noteManager.getById(Long.valueOf(id));
+
+		request.setAttribute("notes", n);
+		try {
+			request.getRequestDispatcher("/WEB-INF/note.jsp").forward(request, response);
+		} catch (ServletException | IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+
 }
