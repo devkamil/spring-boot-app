@@ -4,34 +4,33 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>First Servlet</title>
+<title>Add Note</title>
 
 <script>
 	function validateForm() {
 		var x = document.forms["blank"]["title"].value;
 		var y = document.forms["blank"]["content"].value;
 		var z = document.forms["blank"]["author"].value;
-		if (x=="" || y=="" || z == "") {
-			alert("Nie wypełnione wszystkie pola");
+		if (x == "" || y == "" || z == "") {
+			alert("Fill all fields!");
 			return false;
 		}
-
 
 	}
 </script>
 </head>
 <body>
 
-	<h1>My First Servlet!</h1>
-	<form name="blank" action="FirstServlet.do"
+	<h1>Add Note!</h1>
+	<form name="blank" action="	FirstServlet.do"
 		onsubmit="return validateForm()" method="post">
-		<p>Temat:</p>
+		<p>Title:</p>
 		<input type="text" name="title" />
-		<p>Treść notatki:</p>
-		<textarea rows="4" cols="20" name="content">Treść notatki...</textarea>
-		<p>Autor:</p>
-		<input type="text" name="author" /><br />
-		<br /> <input type="submit" value="OK" />
+		<p>Note content:</p>
+		<textarea rows="4" cols="20" name="content">...content...</textarea>
+		<p>Author:</p>
+		<input type="text" name="author" /><br /> <br /> <input
+			type="submit" value="OK" />
 	</form>
 </body>
 </html>

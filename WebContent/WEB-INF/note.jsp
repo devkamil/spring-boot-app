@@ -4,16 +4,16 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>Notatka</title>
+<title>Note</title>
 </head>
 <body>
-	<p>Zapisana notatka: </p>
-	<p>Temat: ${notes.title}</p>
-	<p>Treść notatki: ${notes.content}</p>
-	<p>Autor: ${notes.author}</p>
-	<p>Data: ${notes.date}</p>
+	<p>Saved note: </p>
+	<p>Title: ${notes.title}</p>
+	<p>Note content: ${notes.content}</p>
+	<p>Author: ${notes.author}</p>
+	<p>Date: ${notes.date}</p>
 	
-	<a href="index.jsp">Powrót</a>
+	<a href="index.jsp">Back</a>
 	
 
 </body>

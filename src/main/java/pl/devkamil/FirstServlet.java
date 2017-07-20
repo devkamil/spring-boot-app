@@ -7,6 +7,7 @@ import java.util.Date;
 import java.util.List;
 
 import javax.servlet.ServletException;
+import javax.servlet.ServletRequest;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -15,60 +16,37 @@ import javax.servlet.http.HttpServletResponse;
 /**
  * Servlet implementation class FirstServlet
  */
-// @WebServlet(name = "FirstServlet", urlPatterns = { "/FirstServlet",
-// "/index.jsp" })
-@WebServlet("/index.jsp")
+@WebServlet(name = "FirstServlet", urlPatterns = { "/FirstServlet", "/FirstServlet.do", "/index.jsp" })
+
 public class FirstServlet extends HttpServlet {
+	
 	private static final long serialVersionUID = 1L;
-	private static final DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm");
-	WriterFile writerFile = new WriterFile();
+	private static final String ADD_NOTE_INDEX_BUTTON = "addNote";
+
 	NoteManager noteManager = new NoteManager();
+	AddNote addNote = new AddNote();
 
-	protected void firstServlet(HttpServletRequest request, HttpServletResponse response)
-			throws ServletException, IOException {
-
-		request.setCharacterEncoding("UTF-8");
-
-		Note note = new Note();
-		note.setTitle(request.getParameter("title"));
-		note.setContent(request.getParameter("content"));
-		note.setAuthor(request.getParameter("author"));
-
-		Date date = new Date();
-		String currentDate = dateFormat.format(date);
-		note.setDate(currentDate);
-
-		request.setAttribute("notes", note);
-
-		writerFile.fileWriter(note, date);
-
-//		noteManager.setup();
-		noteManager.create(note);
-		noteManager.exit();
-
-		request.getRequestDispatcher("/note.jsp").forward(request, response);
-	}
-
-	/**
-	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse
-	 *      response)
-	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		// TODO Auto-generated method stub
-		firstServlet(request, response);
 
+		String addNoteName = request.getParameter(ADD_NOTE_INDEX_BUTTON);
+		System.out.println("addNoteName: " + addNoteName);
+		if ("addNote".equals(addNoteName)) {
+			request.getRequestDispatcher("/WEB-INF/addNote.jsp").forward(request, response);
+			return;
+		}
+
+		addNote.firstServlet(request, response);
 	}
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		// TODO Auto-generated method stub
 
 		String action = request.getParameter("action");
 
 		if ("show".equals(action)) {
 			String id = request.getParameter("id");
-			show(request, response, id);
+			noteManager.read(request, response, id);
 			return;
 		}
 
@@ -78,16 +56,14 @@ public class FirstServlet extends HttpServlet {
 
 	}
 
-	public void show(HttpServletRequest request, HttpServletResponse response, String id) {
-		Note n = noteManager.getById(Long.valueOf(id));
+	@Override
+	public void init() {
+		HibernateUtil.buildSessionFactory();
+	}
 
-		request.setAttribute("notes", n);
-		try {
-			request.getRequestDispatcher("/WEB-INF/note.jsp").forward(request, response);
-		} catch (ServletException | IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+	@Override
+	public void destroy() {
+		HibernateUtil.sessionFactory.close();
 	}
 
 }

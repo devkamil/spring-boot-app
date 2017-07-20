@@ -32,7 +32,7 @@ th, td {
 	<form action="FirstServlet" method="post">
 
 		<table>
-			<caption>Spring Boot App</caption>
+			<caption>Note App</caption>
 			<tr>
 				<th>Note ID</th>
 				<th>Title</th>
@@ -43,14 +43,17 @@ th, td {
 				<tr>
 					<td><c:out value="${loop.count}" /></td>
 					<td><c:out value="${note.title }" /></td>
-					<td><a href="${pageContext.request.contextPath}/index.jsp?action=show&id=${note.id}">Zobacz</a>
+					<td><a
+						href="${pageContext.request.contextPath}/index.jsp?action=show&id=${note.id}">Show</a>
 				</tr>
 			</c:forEach>
 		</table>
-		
 	</form>
-	
-	
+
+	<form action="FirstServlet" method="post">
+		<br />
+		<button type="submit" name="addNote" value="addNote">addNote</button>
+	</form>
 
 
 
