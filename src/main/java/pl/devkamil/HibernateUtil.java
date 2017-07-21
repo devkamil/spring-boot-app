@@ -3,6 +3,10 @@ package pl.devkamil;
 import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Configuration;
 
+/**
+ * HibernateUtil class is responsible for connect with SQL database	
+ */
+
 public class HibernateUtil {
 
 	protected static final SessionFactory sessionFactory = buildSessionFactory();

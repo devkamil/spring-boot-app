@@ -7,14 +7,13 @@ import java.util.Date;
 import java.util.List;
 
 import javax.servlet.ServletException;
-import javax.servlet.ServletRequest;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 /**
- * Servlet implementation class FirstServlet
+ * Servlet implementation class FirstServlet, main application servlet
  */
 @WebServlet(name = "FirstServlet", urlPatterns = { "/FirstServlet", "/FirstServlet.do", "/index.jsp" })
 
@@ -22,13 +21,22 @@ public class FirstServlet extends HttpServlet {
 	
 	private static final long serialVersionUID = 1L;
 	private static final String ADD_NOTE_INDEX_BUTTON = "addNote";
+	
+	private DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm");
+	WriterFile writerFile = new WriterFile();
+	NoteService noteService = new NoteService();
+	aaaAddNote addNote = new aaaAddNote();
 
-	NoteManager noteManager = new NoteManager();
-	AddNote addNote = new AddNote();
-
+	/**
+	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse
+	 *      response)
+	 */
+	
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-
+		
+		request.setCharacterEncoding("UTF-8");
+		response.setCharacterEncoding("UTF-8");
 		String addNoteName = request.getParameter(ADD_NOTE_INDEX_BUTTON);
 		System.out.println("addNoteName: " + addNoteName);
 		if ("addNote".equals(addNoteName)) {
@@ -36,24 +44,46 @@ public class FirstServlet extends HttpServlet {
 			return;
 		}
 
-		addNote.firstServlet(request, response);
+		addNoteToDb(request, response);
+		request.getRequestDispatcher("/WEB-INF/note.jsp").forward(request, response);
 	}
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-
+		
+		request.setCharacterEncoding("UTF-8");
+		response.setCharacterEncoding("UTF-8");
 		String action = request.getParameter("action");
 
 		if ("show".equals(action)) {
 			String id = request.getParameter("id");
-			noteManager.read(request, response, id);
+			Note noteById = noteService.readById(id);
+			request.setAttribute("notes", noteById);
+			request.getRequestDispatcher("/WEB-INF/note.jsp").forward(request, response);
 			return;
 		}
 
-		List<Note> allNote = noteManager.getAllNotes();
+		List<Note> allNote = noteService.readAllNote();
 		request.setAttribute("notes", allNote);
 		request.getRequestDispatcher("/WEB-INF/index.jsp").forward(request, response);
 
+	}
+	
+	protected void addNoteToDb(HttpServletRequest request, HttpServletResponse response){
+		Note note = new Note();
+		note.setTitle(request.getParameter("title"));
+		note.setContent(request.getParameter("content"));
+		note.setAuthor(request.getParameter("author"));
+
+		Date date = new Date();
+		String currentDate = dateFormat.format(date);
+		note.setDate(currentDate);
+
+		request.setAttribute("notes", note);
+
+		writerFile.fileWriter(note, date);
+
+		noteService.create(note);
 	}
 
 	@Override

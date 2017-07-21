@@ -1,52 +1,28 @@
 package pl.devkamil;
 
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.servlet.ServletException;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-
-import org.hibernate.HibernateException;
 import org.hibernate.Session;
-import org.hibernate.SessionFactory;
-import org.hibernate.Transaction;
-import org.hibernate.boot.MetadataSources;
-import org.hibernate.boot.registry.StandardServiceRegistry;
-import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
+
+/**
+ *  NoteManager is a class contains methods which operating on SQL database
+ */
 
 public class NoteManager {
 
-	protected void create(Note note) {
-		Session session = HibernateUtil.sessionFactory.openSession();
-		session.beginTransaction();
-
-		session.save(note);
-
-		session.getTransaction().commit();
-		session.close();
-	}
-
-	protected void read(HttpServletRequest request, HttpServletResponse response, String id) {
-		Note n = getById(Long.valueOf(id));
-
-		request.setAttribute("notes", n);
-		try {
-			request.getRequestDispatcher("/WEB-INF/note.jsp").forward(request, response);
-		} catch (ServletException | IOException e) {
-			e.printStackTrace();
-		}
-	}
-
+	/**
+	 * This method is getting all notes from database
+	 */
+	
 	public List<Note> getAllNotes() {
 
 		Session session = HibernateUtil.getSessionFactory().openSession();
 
-		List<Note> notatkiAll = new ArrayList<Note>();
+		List<Note> notesAll = new ArrayList<Note>();
 		try {
 			session.beginTransaction();
-			notatkiAll = session.createQuery("from Note").list();
+			notesAll = session.createQuery("from Note").list();
 
 		} catch (RuntimeException ex) {
 			ex.printStackTrace();
@@ -54,9 +30,15 @@ public class NoteManager {
 			session.flush();
 			session.close();
 		}
-		return notatkiAll;
+		return notesAll;
 
 	}
+	
+	/**
+	 * This method is getting one note from database based on 'id' number
+	 * @param id This is 'id' number from database
+	 * @return One note with a given 'id' number
+	 */
 
 	public Note getById(long id) {
 		Session session = HibernateUtil.getSessionFactory().openSession();
