@@ -57,5 +57,19 @@ public class NoteService {
 		session.getTransaction().commit();
 		session.close();
 	}
+	
+	/**
+	 * This method is deleting Note object from database
+	 * @param note Note ready to delete from database
+	 */
+	protected void delete (Note note) {
+		Session session = HibernateUtil.sessionFactory.openSession();
+		session.beginTransaction();
+		
+		session.delete(note);
+		
+		session.getTransaction().commit();
+		session.close();
+	}
 
 }

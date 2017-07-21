@@ -77,6 +77,18 @@ public class FirstServlet extends HttpServlet {
 			request.getRequestDispatcher("/WEB-INF/edit.jsp").forward(request, response);
 			return;
 		}
+		
+		if("delete".equals(action)){
+			System.out.println("delete");
+			Note noteById = noteService.readById(id);
+			request.setAttribute("notesDelete", noteById);
+			request.getRequestDispatcher("/WEB-INF/delete.jsp").forward(request, response);
+			return;			
+		}
+		
+		if("remove".equals(action)){
+			deleteNote(id);
+		}
 
 		List<Note> allNote = noteService.readAllNote();
 		request.setAttribute("notes", allNote);
@@ -123,6 +135,14 @@ public class FirstServlet extends HttpServlet {
 		request.setAttribute("notes", note);
 
 		noteService.update(note);
+	}
+	/**
+	 * This method is deleting note
+	 * @param id Note 'id' number
+	 */
+	protected void deleteNote(String id){
+		Note note = noteService.readById(id);
+		noteService.delete(note);
 	}
 
 	@Override

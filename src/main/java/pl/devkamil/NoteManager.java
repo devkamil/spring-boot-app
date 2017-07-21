@@ -56,6 +56,7 @@ public class NoteManager {
 			session.flush();
 			session.close();
 		}
+
 		return noteAll.get(0);
 	}
 
