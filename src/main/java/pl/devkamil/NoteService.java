@@ -11,10 +11,11 @@ import org.hibernate.Session;
 public class NoteService {
 
 	NoteManager noteManager = new NoteManager();
-	
+
 	/**
 	 * This method receives one note and saved it in database
-	 * @param note Note Object with filled fields
+	 * 
+	 * @param note Note Object with filled fields         
 	 */
 	protected void create(Note note) {
 		Session session = HibernateUtil.sessionFactory.openSession();
@@ -24,8 +25,8 @@ public class NoteService {
 
 		session.getTransaction().commit();
 		session.close();
-	}	
-	
+	}
+
 	/**
 	 * This method is taking one note with given 'id' numbers
 	 */
@@ -33,7 +34,7 @@ public class NoteService {
 		Note noteById = noteManager.getById(Long.valueOf(id));
 		return noteById;
 	}
-	
+
 	/**
 	 * This method is getting all notes
 	 */
@@ -41,6 +42,20 @@ public class NoteService {
 		List<Note> listAllNote = noteManager.getAllNotes();
 		return listAllNote;
 	}
-	
-	
+
+	/**
+	 * This method insert Note object to database
+	 * 
+	 * @param note Note ready to insert in database           
+	 */
+	protected void update(Note note) {
+		Session session = HibernateUtil.sessionFactory.openSession();
+		session.beginTransaction();
+
+		session.update(note);
+
+		session.getTransaction().commit();
+		session.close();
+	}
+
 }

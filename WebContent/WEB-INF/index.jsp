@@ -37,6 +37,7 @@ th, td {
 				<th>Note ID</th>
 				<th>Title</th>
 				<th>View</th>
+				<th>Edit</th>
 			</tr>
 
 			<c:forEach items="${notes}" var="note" varStatus="loop">
@@ -45,6 +46,8 @@ th, td {
 					<td><c:out value="${note.title }" /></td>
 					<td><a
 						href="${pageContext.request.contextPath}/index.jsp?action=show&id=${note.id}">Show</a>
+					<td><a 
+						href="${pageContext.request.contextPath}/index.jsp?action=edit&id=${note.id}">Edit ${loop.count}</a>
 				</tr>
 			</c:forEach>
 		</table>

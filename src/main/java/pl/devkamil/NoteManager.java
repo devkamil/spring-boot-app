@@ -6,7 +6,7 @@ import java.util.List;
 import org.hibernate.Session;
 
 /**
- *  NoteManager is a class contains methods which operating on SQL database
+ * NoteManager is a class contains methods which operating on SQL database
  */
 
 public class NoteManager {
@@ -14,7 +14,7 @@ public class NoteManager {
 	/**
 	 * This method is getting all notes from database
 	 */
-	
+
 	public List<Note> getAllNotes() {
 
 		Session session = HibernateUtil.getSessionFactory().openSession();
@@ -33,20 +33,22 @@ public class NoteManager {
 		return notesAll;
 
 	}
-	
+
 	/**
 	 * This method is getting one note from database based on 'id' number
-	 * @param id This is 'id' number from database
+	 * 
+	 * @param id
+	 *            This is 'id' number from database
 	 * @return One note with a given 'id' number
 	 */
 
 	public Note getById(long id) {
 		Session session = HibernateUtil.getSessionFactory().openSession();
 
-		List<Note> notatkiAll = new ArrayList<Note>();
+		List<Note> noteAll = new ArrayList<Note>();
 		try {
 			session.beginTransaction();
-			notatkiAll = session.createQuery("from Note where id=:abc").setParameter("abc", id).list();
+			noteAll = session.createQuery("from Note where id=:abc").setParameter("abc", id).list();
 
 		} catch (RuntimeException ex) {
 			ex.printStackTrace();
@@ -54,8 +56,7 @@ public class NoteManager {
 			session.flush();
 			session.close();
 		}
-		return notatkiAll.get(0);
-
+		return noteAll.get(0);
 	}
 
 	public NoteManager() {

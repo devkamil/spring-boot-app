@@ -21,6 +21,7 @@ public class FirstServlet extends HttpServlet {
 	
 	private static final long serialVersionUID = 1L;
 	private static final String ADD_NOTE_INDEX_BUTTON = "addNote";
+	private static final String EDIT_BUTTON_VALUE = "editButton";
 	
 	private static final DateFormat DATE_FORMAT = new SimpleDateFormat("yyyy/MM/dd HH:mm");
 	WriterFile writerFile = new WriterFile();
@@ -33,31 +34,47 @@ public class FirstServlet extends HttpServlet {
 	
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		
+
 		request.setCharacterEncoding("UTF-8");
 		response.setCharacterEncoding("UTF-8");
 		String addNoteName = request.getParameter(ADD_NOTE_INDEX_BUTTON);
+		String editButton = request.getParameter(EDIT_BUTTON_VALUE);
+		
 		if ("addNote".equals(addNoteName)) {
 			request.getRequestDispatcher("/WEB-INF/addNote.jsp").forward(request, response);
 			return;
 		}
 
+		if("OK".equals(editButton)){
+			String id = request.getParameter("id");
+			updateNote(request, response, id);			
+			request.getRequestDispatcher("/WEB-INF/note.jsp").forward(request, response);
+			return;
+		}
+		
 		addNote(request, response);
 		request.getRequestDispatcher("/WEB-INF/note.jsp").forward(request, response);
 	}
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		
+
 		request.setCharacterEncoding("UTF-8");
 		response.setCharacterEncoding("UTF-8");
 		String action = request.getParameter("action");
+		String id = request.getParameter("id");
 
-		if ("show".equals(action)) {
-			String id = request.getParameter("id");
+		if ("show".equals(action)) {			
 			Note noteById = noteService.readById(id);
 			request.setAttribute("notes", noteById);
 			request.getRequestDispatcher("/WEB-INF/note.jsp").forward(request, response);
+			return;
+		}
+		
+		if ("edit".equals(action)){
+			Note noteById = noteService.readById(id);
+			request.setAttribute("notes", noteById);
+			request.getRequestDispatcher("/WEB-INF/edit.jsp").forward(request, response);
 			return;
 		}
 
@@ -67,6 +84,9 @@ public class FirstServlet extends HttpServlet {
 
 	}
 	
+	/**
+	 * This method is creating Note object from index.jsp form
+	 */
 	protected void addNote(HttpServletRequest request, HttpServletResponse response){
 		Note note = new Note();
 		note.setTitle(request.getParameter("title"));
@@ -82,6 +102,27 @@ public class FirstServlet extends HttpServlet {
 		writerFile.fileWriter(note, date);
 
 		noteService.create(note);
+	}
+	
+	/**
+	 * This method is updating note in database
+	 * @param id  Note 'id' number
+	 */
+	
+	protected void updateNote(HttpServletRequest request, HttpServletResponse response, String id){
+
+		Note note = noteService.readById(id);
+		note.setTitle(request.getParameter("title"));
+		note.setContent(request.getParameter("content"));
+		note.setAuthor(request.getParameter("author"));
+
+		Date date = new Date();
+		String currentDate = DATE_FORMAT.format(date);
+		note.setDate(currentDate);
+
+		request.setAttribute("notes", note);
+
+		noteService.update(note);
 	}
 
 	@Override
