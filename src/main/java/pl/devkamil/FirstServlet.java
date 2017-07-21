@@ -25,7 +25,6 @@ public class FirstServlet extends HttpServlet {
 	private DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm");
 	WriterFile writerFile = new WriterFile();
 	NoteService noteService = new NoteService();
-	aaaAddNote addNote = new aaaAddNote();
 
 	/**
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse

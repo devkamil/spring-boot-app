@@ -44,31 +44,3 @@ public class NoteService {
 	
 	
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-//protected void read(HttpServletRequest request, HttpServletResponse response, String id) {
-//Note n = getById(Long.valueOf(id));
-//
-//request.setAttribute("notes", n);
-//try {
-//	request.getRequestDispatcher("/WEB-INF/note.jsp").forward(request, response);
-//} catch (ServletException | IOException e) {
-//	e.printStackTrace();
-//}
-//}
