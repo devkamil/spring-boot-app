@@ -48,15 +48,15 @@ th, td {
 					<td><a
 						href="${pageContext.request.contextPath}/show/${note.id}">Show</a></td>
 					<td><a 
-						href="${pageContext.request.contextPath}/index.jsp?action=edit&id=${note.id}">Edit ${loop.count}</a></td>
+						href="${pageContext.request.contextPath}/edit/${note.id}">Edit ${loop.count}</a></td>
 					<td><a
-						href="${pageContext.request.contextPath}/index.jsp?action=delete&id=${note.id}">Delete</a></td>
+						href="${pageContext.request.contextPath}/delete/${note.id}">Delete</a></td>
 				</tr>
 			</c:forEach>
 		</table>
 	</form>
 
-	<form action="FirstServlet" method="post">
+	<form action="${pageContext.request.contextPath}/addNote">
 		<br />
 		<button type="submit" name="addNote" value="addNote">addNote</button>
 	</form>

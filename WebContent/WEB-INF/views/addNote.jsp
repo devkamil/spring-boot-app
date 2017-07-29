@@ -22,7 +22,7 @@
 <body>
 
 	<h1>Add Note!</h1>
-	<form name="blank" action="	FirstServlet.do"
+	<form name="blank" action="	${pageContext.request.contextPath}/saveNote"
 		onsubmit="return validateForm()" method="post">
 		<p>Title:</p>
 		<input type="text" name="title" />

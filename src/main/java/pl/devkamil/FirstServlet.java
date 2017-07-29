@@ -1,13 +1,10 @@
 package pl.devkamil;
 
-import java.io.IOException;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 
-import javax.servlet.ServletException;
-import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -17,19 +14,16 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 
 /**
  * Servlet implementation class FirstServlet, main application servlet
  */
 
-//@WebServlet(name = "FirstServlet", urlPatterns = { "/FirstServlet", "/FirstServlet.do", "/index.jsp" })
-
 @Controller
 public class FirstServlet extends HttpServlet {
 	
 	private static final long serialVersionUID = 1L;
-	private static final String ADD_NOTE_INDEX_BUTTON = "addNote";
-	private static final String EDIT_BUTTON_VALUE = "editButton";
 	
 	private static final DateFormat DATE_FORMAT = new SimpleDateFormat("yyyy/MM/dd HH:mm");
 	
@@ -39,101 +33,101 @@ public class FirstServlet extends HttpServlet {
 	@Autowired
 	private NoteService noteService;
 
-	/**
-	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse
-	 *      response)
-	 */
 	
-	protected void doPost(HttpServletRequest request, HttpServletResponse response)
-			throws ServletException, IOException {
-
-		request.setCharacterEncoding("UTF-8");
-		response.setCharacterEncoding("UTF-8");
-		String addNoteName = request.getParameter(ADD_NOTE_INDEX_BUTTON);
-		String editButton = request.getParameter(EDIT_BUTTON_VALUE);
-		
-		if ("addNote".equals(addNoteName)) {
-			request.getRequestDispatcher("/WEB-INF/addNote.jsp").forward(request, response);
-			return;
-		}
-
-		if("OK".equals(editButton)){
-			String id = request.getParameter("id");
-			updateNote(request, response, id);			
-			request.getRequestDispatcher("/WEB-INF/note.jsp").forward(request, response);
-			return;
-		}
-		
-		addNote(request, response);
-		request.getRequestDispatcher("/WEB-INF/note.jsp").forward(request, response);
+	/**
+	 * This method print blank form to add Note
+	 * @return Blank form 'addNote'
+	 */
+	@RequestMapping(value = "addNote")
+	public String noteAdd () {
+		return "addNote";
 	}
 	
+	/**
+	 * This method is saving Note
+	 * @return Main page of application
+	 */
+	@RequestMapping(value="saveNote", method = RequestMethod.POST)
+	public String saveNote(Model model, HttpServletRequest request, HttpServletResponse response){
+		addNote(request, response);
+		List<Note> allNote = noteService.readAllNote();
+		model.addAttribute("notes", allNote);
+		return "index";
+	}
 	
+	/**
+	 * This method is saving an edited Note
+	 * @param id Number 'id' of Note
+	 * @return Main page of application
+	 */
+	@RequestMapping(value="edited/{id}", method = RequestMethod.POST)
+	public String editButton (Model model, @PathVariable("id") String id, HttpServletRequest request, HttpServletResponse response) {		
+		updateNote(request, response, id);
+		System.out.println(request + "   +++    " +response);
+		List<Note> allNote = noteService.readAllNote();
+		model.addAttribute("notes", allNote);
+		return "index";
+	}
+	
+	/**
+	 * This is starting method, main page of application
+	 * @return Main page of application
+	 */
 	@RequestMapping("/")
-	public String jakub (Model model) {
+	public String index (Model model) {
 		List<Note> allNote = noteService.readAllNote();
 		model.addAttribute("notes", allNote);
 		return "index";
 	}
 	
 
-	
+	/**
+	 * This method shows a Note
+	 * @param id Number 'id' of Note
+	 * @return Page with full content of Note
+	 */
 	@RequestMapping("/show/{id}")
-	public String show(Model model, @PathVariable("id") String id){
-		
+	public String show(Model model, @PathVariable("id") String id){		
 		Note noteById = noteService.readById(id);		
 		model.addAttribute("notes", noteById);		
 		return "note";		
 	}
 	
+	/**
+	 * This method display a page to edit a Note
+	 * @param id Number 'id' of Note
+	 * @return Page to edit a Note
+	 */
+	@RequestMapping("/edit/{id}")
+	public String edit(Model model, @PathVariable("id") String id) {		
+		Note noteById = noteService.readById(id);
+		model.addAttribute("notes", noteById);
+		return "edit";
+	}
 	
+	/**
+	 * This method print deleted Note
+	 * @param id Number 'id' of Note
+	 * @return Page with "Back" or "Remove" buttons
+	 */
+	@RequestMapping("/delete/{id}")
+	public String delete(Model model, @PathVariable("id") String id){
+		Note noteById = noteService.readById(id);
+		model.addAttribute("notesDelete", noteById);
+		return "delete";
+	}
 	
-	
-	
-	
-	
-	
-	protected void doGet(HttpServletRequest request, HttpServletResponse response)
-			throws ServletException, IOException {
-
-		request.setCharacterEncoding("UTF-8");
-		response.setCharacterEncoding("UTF-8");
-		String action = request.getParameter("action");
-		String id = request.getParameter("id");
-
-		System.out.println("action:  " +action);
-		
-		
-		
-		if ("edit".equals(action)){
-			Note noteById = noteService.readById(id);
-			request.setAttribute("notes", noteById);
-			request.getRequestDispatcher("/WEB-INF/edit.jsp").forward(request, response);
-			return;
-		}
-		
-		if("delete".equals(action)){
-			Note noteById = noteService.readById(id);
-			request.setAttribute("notesDelete", noteById);
-			request.getRequestDispatcher("/WEB-INF/delete.jsp").forward(request, response);
-			return;			
-		}
-		
-		if("remove".equals(action)){
-			deleteNote(id);
-//			List<Note> allNote = noteService.readAllNote();
-//			request.setAttribute("notes", allNote);
-			request.getRequestDispatcher("/WEB-INF/index.jsp").forward(request, response);
-			return;			
-		}
-
+	/**
+	 * This method is deleting Note
+	 * @param id Number 'id' of Note
+	 * @return Main page of application
+	 */
+	@RequestMapping("/remove/{id}")
+	public String remove(Model model, @PathVariable("id") String id) {
+		noteService.delete(id);
 		List<Note> allNote = noteService.readAllNote();
-		request.setAttribute("notes", allNote);
-		request.getRequestDispatcher("/WEB-INF/index.jsp").forward(request, response);
-
-
-	
-	
+		model.addAttribute("notes", allNote);
+		return "index";
 	}
 	
 	
@@ -177,14 +171,7 @@ public class FirstServlet extends HttpServlet {
 
 		noteService.update(note);
 	}
-	/**
-	 * This method is deleting note
-	 * @param id Note 'id' number
-	 */
-	protected void deleteNote(String id){
-		Note note = noteService.readById(id);
-		noteService.delete(note);
-	}
+
 
 	@Override
 	public void init() {

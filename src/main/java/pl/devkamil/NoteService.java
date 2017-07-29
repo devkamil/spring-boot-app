@@ -52,14 +52,15 @@ public class NoteService {
 		noteManager.update(note);		
 	}
 
+	
 	/**
 	 * This method is deleting Note object from database
-	 * @param note Note ready to delete from database
+	 * @param id Note 'id' number
 	 */
-	public void delete(Note note) {
-		noteManager.delete(note);		
+	public void delete(String id){
+		Note note = readById(id);
+		noteManager.delete(note);
 	}
-
 	
 
 }

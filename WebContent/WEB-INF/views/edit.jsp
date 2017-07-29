@@ -22,7 +22,7 @@
 <body>
 
 	<h1>Edit Note!</h1>
-	<form name="blank" action="FirstServlet.do"
+	<form name="blank" action="${pageContext.request.contextPath}/edited/${notes.id}"
 		onsubmit="return validateForm()" method="post">
 		<input type="hidden" name="id" value="${notes.id }" />
 		<p>Title:</p>

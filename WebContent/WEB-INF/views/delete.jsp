@@ -13,7 +13,7 @@
 	<p>Author: ${notesDelete.author}</p>
 	<p>Date: ${notesDelete.date}</p> <br />
 	
-	<a href="index.jsp">Back</a> &nbsp;&nbsp;&nbsp; <a href="index.jsp?action=remove&id=${notesDelete.id }">Delete</a> 
+	<a href="/spring-boot-app">Back</a> &nbsp;&nbsp;&nbsp; <a href="${pageContext.request.contextPath}/remove/${notesDelete.id}">Delete</a> 
 	
 
 </body>

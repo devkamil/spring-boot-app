@@ -2,6 +2,7 @@ package pl.devkamil;
 
 import javax.persistence.*;
 
+
 @Entity
 @Table(name = "note")
 
