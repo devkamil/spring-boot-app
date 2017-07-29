@@ -13,7 +13,7 @@ import org.springframework.stereotype.Service;
 public class NoteService {
 
 	@Autowired
-	NoteManager noteManager;
+	private NoteManager noteManager;
 
 
 

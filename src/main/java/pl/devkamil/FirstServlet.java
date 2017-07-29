@@ -14,11 +14,15 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestMapping;
 
 /**
  * Servlet implementation class FirstServlet, main application servlet
  */
-@WebServlet(name = "FirstServlet", urlPatterns = { "/FirstServlet", "/FirstServlet.do", "/index.jsp" })
+
+//@WebServlet(name = "FirstServlet", urlPatterns = { "/FirstServlet", "/FirstServlet.do", "/index.jsp" })
 
 @Controller
 public class FirstServlet extends HttpServlet {
@@ -64,6 +68,31 @@ public class FirstServlet extends HttpServlet {
 		request.getRequestDispatcher("/WEB-INF/note.jsp").forward(request, response);
 	}
 	
+	
+	@RequestMapping("/")
+	public String jakub (Model model) {
+		List<Note> allNote = noteService.readAllNote();
+		model.addAttribute("notes", allNote);
+		return "index";
+	}
+	
+
+	
+	@RequestMapping("/show/{id}")
+	public String show(Model model, @PathVariable("id") String id){
+		
+		Note noteById = noteService.readById(id);		
+		model.addAttribute("notes", noteById);		
+		return "note";		
+	}
+	
+	
+	
+	
+	
+	
+	
+	
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 
@@ -74,13 +103,7 @@ public class FirstServlet extends HttpServlet {
 
 		System.out.println("action:  " +action);
 		
-
-		if ("show".equals(action)) {			
-			Note noteById = noteService.readById(id);
-			request.setAttribute("notes", noteById);
-			request.getRequestDispatcher("/WEB-INF/note.jsp").forward(request, response);
-			return;
-		}
+		
 		
 		if ("edit".equals(action)){
 			Note noteById = noteService.readById(id);

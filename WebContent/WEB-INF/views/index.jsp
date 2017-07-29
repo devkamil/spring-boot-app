@@ -46,7 +46,7 @@ th, td {
 					<td><c:out value="${loop.count}" /></td>
 					<td><c:out value="${note.title }" /></td>
 					<td><a
-						href="${pageContext.request.contextPath}/index.jsp?action=show&id=${note.id}">Show</a></td>
+						href="${pageContext.request.contextPath}/show/${note.id}">Show</a></td>
 					<td><a 
 						href="${pageContext.request.contextPath}/index.jsp?action=edit&id=${note.id}">Edit ${loop.count}</a></td>
 					<td><a

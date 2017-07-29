@@ -13,7 +13,7 @@
 	<p>Author: ${notes.author}</p>
 	<p>Date: ${notes.date}</p>
 	
-	<a href="index.jsp">Back</a>
+	<a href="/spring-boot-app">Back</a>
 	
 
 </body>
