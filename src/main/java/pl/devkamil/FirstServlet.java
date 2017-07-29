@@ -12,11 +12,15 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+
 /**
  * Servlet implementation class FirstServlet, main application servlet
  */
 @WebServlet(name = "FirstServlet", urlPatterns = { "/FirstServlet", "/FirstServlet.do", "/index.jsp" })
 
+@Controller
 public class FirstServlet extends HttpServlet {
 	
 	private static final long serialVersionUID = 1L;
@@ -24,8 +28,12 @@ public class FirstServlet extends HttpServlet {
 	private static final String EDIT_BUTTON_VALUE = "editButton";
 	
 	private static final DateFormat DATE_FORMAT = new SimpleDateFormat("yyyy/MM/dd HH:mm");
-	WriterFile writerFile = new WriterFile();
-	NoteService noteService = new NoteService();
+	
+	@Autowired
+	WriterFile writerFile;
+	
+	@Autowired
+	private NoteService noteService;
 
 	/**
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse
@@ -55,7 +63,7 @@ public class FirstServlet extends HttpServlet {
 		addNote(request, response);
 		request.getRequestDispatcher("/WEB-INF/note.jsp").forward(request, response);
 	}
-
+	
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 
@@ -63,6 +71,9 @@ public class FirstServlet extends HttpServlet {
 		response.setCharacterEncoding("UTF-8");
 		String action = request.getParameter("action");
 		String id = request.getParameter("id");
+
+		System.out.println("action:  " +action);
+		
 
 		if ("show".equals(action)) {			
 			Note noteById = noteService.readById(id);
@@ -79,7 +90,6 @@ public class FirstServlet extends HttpServlet {
 		}
 		
 		if("delete".equals(action)){
-			System.out.println("delete");
 			Note noteById = noteService.readById(id);
 			request.setAttribute("notesDelete", noteById);
 			request.getRequestDispatcher("/WEB-INF/delete.jsp").forward(request, response);
@@ -88,13 +98,21 @@ public class FirstServlet extends HttpServlet {
 		
 		if("remove".equals(action)){
 			deleteNote(id);
+//			List<Note> allNote = noteService.readAllNote();
+//			request.setAttribute("notes", allNote);
+			request.getRequestDispatcher("/WEB-INF/index.jsp").forward(request, response);
+			return;			
 		}
 
 		List<Note> allNote = noteService.readAllNote();
 		request.setAttribute("notes", allNote);
 		request.getRequestDispatcher("/WEB-INF/index.jsp").forward(request, response);
 
+
+	
+	
 	}
+	
 	
 	/**
 	 * This method is creating Note object from index.jsp form

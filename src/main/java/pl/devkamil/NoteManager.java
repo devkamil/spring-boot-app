@@ -4,11 +4,13 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.hibernate.Session;
+import org.springframework.stereotype.Repository;
 
 /**
  * NoteManager is a class contains methods which operating on SQL database
  */
 
+@Repository
 public class NoteManager {
 
 	/**
@@ -59,8 +61,57 @@ public class NoteManager {
 
 		return noteAll.get(0);
 	}
+	
+	/**
+	 * This method receives one note and saved it in database
+	 * 
+	 * @param note Note Object with filled fields         
+	 */
+	public void create(Note note) {
+		Session session = HibernateUtil.sessionFactory.openSession();
+		session.beginTransaction();
+
+		session.save(note);
+
+		session.getTransaction().commit();
+		session.close();
+	}
+	
+	
+	/**
+	 * This method insert Note object to database
+	 * 
+	 * @param note Note ready to insert in database           
+	 */
+	public void update(Note note) {
+		Session session = HibernateUtil.sessionFactory.openSession();
+		session.beginTransaction();
+
+		session.update(note);
+
+		session.getTransaction().commit();
+		session.close();
+	}
+	
+	/**
+	 * This method is deleting Note object from database
+	 * @param note Note ready to delete from database
+	 */
+	public void delete (Note note) {
+		Session session = HibernateUtil.sessionFactory.openSession();
+		session.beginTransaction();
+		
+		session.delete(note);
+		
+		session.getTransaction().commit();
+		session.close();
+	}
+	
+	
 
 	public NoteManager() {
 	}
 
+	
+	
 }

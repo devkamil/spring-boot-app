@@ -9,6 +9,9 @@ import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
+import org.springframework.stereotype.Service;
+
+@Service
 public class WriterFile {
 
 	private static final DateFormat dateWriter = new SimpleDateFormat("yyyy-MM-dd-HHmm");
