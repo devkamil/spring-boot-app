@@ -29,7 +29,7 @@ th, td {
 
 
 
-	<form action="FirstServlet" method="post">
+	<form action="NoteController" method="post">
 
 		<table>
 			<caption>Note App</caption>
@@ -46,17 +46,17 @@ th, td {
 					<td><c:out value="${loop.count}" /></td>
 					<td><c:out value="${note.title }" /></td>
 					<td><a
-						href="${pageContext.request.contextPath}/show/${note.id}">Show</a></td>
+						href="${pageContext.request.contextPath}/show-page/${note.id}">Show</a></td>
 					<td><a 
-						href="${pageContext.request.contextPath}/edit/${note.id}">Edit ${loop.count}</a></td>
+						href="${pageContext.request.contextPath}/edit-page/${note.id}">Edit ${loop.count}</a></td>
 					<td><a
-						href="${pageContext.request.contextPath}/delete/${note.id}">Delete</a></td>
+						href="${pageContext.request.contextPath}/delete-page/${note.id}">Delete</a></td>
 				</tr>
 			</c:forEach>
 		</table>
 	</form>
 
-	<form action="${pageContext.request.contextPath}/addNote">
+	<form action="${pageContext.request.contextPath}/add-note-page">
 		<br />
 		<button type="submit" name="addNote" value="addNote">addNote</button>
 	</form>

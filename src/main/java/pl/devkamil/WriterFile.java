@@ -31,6 +31,4 @@ public class WriterFile {
 		}
 	}
 
-	public WriterFile() {
-	}
 }
