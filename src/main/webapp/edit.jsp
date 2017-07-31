@@ -1,10 +1,10 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8"%>
+    pageEncoding="UTF-8"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>Add Note</title>
+<title>Edit note</title>
 
 <script>
 	function validateForm() {
@@ -21,16 +21,20 @@
 </head>
 <body>
 
-	<h1>Add Note!</h1>
-	<form name="blank" action="	${pageContext.request.contextPath}/save-note"
+	<h1>Edit Note!</h1>
+	<form name="blank" action="${pageContext.request.contextPath}/edit-note"
 		onsubmit="return validateForm()" method="post">
+		<input type="hidden" name="id" value="${notes.id }" />
 		<p>Title:</p>
-		<input type="text" name="title" />
+		<input type="text" name="title" value="${notes.title }" /> 
 		<p>Note content:</p>
-		<textarea rows="4" cols="20" name="content">...content...</textarea>
+		<textarea rows="4" cols="20" name="content">${notes.content }</textarea>
 		<p>Author:</p>
-		<input type="text" name="author" /><br /> <br /> <input
-			type="submit" value="OK" />
+		<input type="text" name="author" value="${notes.author }" /><br /> <br /> 
+		<p>Note creation date: ${notes.date } </p>
+		<input type="hidden" name="date" value="${notes.date}" />
+		
+		<input type="submit" value="OK" name="editButton"/>
 	</form>
 </body>
 </html>

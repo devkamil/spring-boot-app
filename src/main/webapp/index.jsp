@@ -48,7 +48,7 @@ th, td {
 					<td><a
 						href="${pageContext.request.contextPath}/show-page/${note.id}">Show</a></td>
 					<td><a 
-						href="${pageContext.request.contextPath}/edit-page/${note.id}">Edit ${loop.count}</a></td>
+						href="${pageContext.request.contextPath}/edit-note/${note.id}">Edit ${loop.count}</a></td>
 					<td><a
 						href="${pageContext.request.contextPath}/delete-page/${note.id}">Delete</a></td>
 				</tr>
@@ -56,7 +56,7 @@ th, td {
 		</table>
 	</form>
 
-	<form action="${pageContext.request.contextPath}/add-note-page">
+	<form action="${pageContext.request.contextPath}/add-note">
 		<br />
 		<button type="submit" name="addNote" value="addNote">addNote</button>
 	</form>
