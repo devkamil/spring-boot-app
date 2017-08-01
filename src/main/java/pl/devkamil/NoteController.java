@@ -59,8 +59,7 @@ public class NoteController {
 	 * @return Blank form 'addNote'
 	 */
 	@GetMapping(value="/add-note")
-	public String noteAddNote(@ModelAttribute("noteDto") NoteDTO noteDto) {
-		
+	public String noteAddNote(@ModelAttribute("noteDto") NoteDTO noteDto) {		
 		return "addNote";
 	}
 		
@@ -70,8 +69,7 @@ public class NoteController {
 	 * @return Main page of application
 	 */
 	@PostMapping(value="/add-note")
-	public String noteAddNote(@ModelAttribute("noteDto") @Valid NoteDTO noteDto, BindingResult result){
-		
+	public String noteAddNote(@ModelAttribute("noteDto") @Valid NoteDTO noteDto, BindingResult result){		
 		if (result.hasErrors()){			
 			return "addNote";			
 		}else{
