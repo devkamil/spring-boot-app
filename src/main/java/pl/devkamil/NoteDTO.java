@@ -1,17 +1,12 @@
 package pl.devkamil;
 
-import javax.persistence.Column;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-
 import org.hibernate.validator.constraints.NotEmpty;
 
+/**
+ * This class is a "Data Transfer Object" of Note
+ */
 public class NoteDTO {
 	
-	@Id
-	@Column(name = "note_id")
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private long id;
 	
 	@NotEmpty

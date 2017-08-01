@@ -27,9 +27,15 @@ public class NoteController {
 		
 	private static final DateFormat DATE_FORMAT = new SimpleDateFormat("yyyy/MM/dd HH:mm");
 	
+	/**
+	 * This object saving Note to .txt file
+	 */
 	@Autowired
 	private WriterFile writerFile;
 	
+	/**
+	 * This object provides a CRUD methods
+	 */
 	@Autowired
 	private NoteRepository noteRepository;	
 

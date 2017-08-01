@@ -11,6 +11,9 @@ import java.util.Date;
 
 import org.springframework.stereotype.Service;
 
+/**
+ * This class is responsible for saving a Note to .txt file
+ */
 @Service
 public class WriterFile {
 
