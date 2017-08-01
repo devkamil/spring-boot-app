@@ -58,7 +58,7 @@ th, td {
 
 	<form action="${pageContext.request.contextPath}/add-note">
 		<br />
-		<button type="submit" name="addNote" value="addNote">addNote</button>
+		<button type="submit" name="addNote" value="addNote">Add Note</button>
 	</form>
 
 

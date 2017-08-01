@@ -5,17 +5,17 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 
-import javax.servlet.http.HttpServletRequest;
+import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 
 /**
  * Servlet implementation class FirstServlet, main application servlet
@@ -34,6 +34,7 @@ public class NoteController {
 	private NoteRepository noteRepository;	
 
 
+
 	
 	/**
 	 * This is starting method, main page of application
@@ -45,38 +46,44 @@ public class NoteController {
 		model.addAttribute("notes", allNote);
 		return "index";
 	}
-
+	
 	
 	/**
 	 * This method print blank form to add Note
 	 * @return Blank form 'addNote'
 	 */
-	@GetMapping("/add-note")
-	public String addNoteForm (Model model) {
-		model.addAttribute("notes", new Note());
+	@GetMapping(value="/add-note")
+	public String noteAddNote(@ModelAttribute("noteDto") NoteDTO noteDto) {
+		
 		return "addNote";
 	}
-	
+		
 	
 	/**
 	 * This method is creating Note object from index.jsp form and saving Note in database
 	 * @return Main page of application
 	 */
-	@PostMapping("/add-note")
-	public String addNoteSubmit(@ModelAttribute Note note, Model model){
-		Date date = new Date();
-		String currentDate = DATE_FORMAT.format(date);
-		note.setDate(currentDate);
-
-		writerFile.fileWriter(note, date);
-
-		noteRepository.save(note);		
-
-		List<Note> allNote =  (List<Note>) noteRepository.findAll();
-		model.addAttribute("notes", allNote);
-		return "index";
+	@PostMapping(value="/add-note")
+	public String noteAddNote(@ModelAttribute("noteDto") @Valid NoteDTO noteDto, BindingResult result){
+		
+		if (result.hasErrors()){			
+			return "addNote";			
+		}else{
+			Note note = new Note();
+			Date date = new Date();
+			String currentDate = DATE_FORMAT.format(date);
+			
+			note.setTitle(noteDto.getTitle());
+			note.setContent(noteDto.getContent());
+			note.setAuthor(noteDto.getAuthor());
+			note.setDate(currentDate);
+			
+			writerFile.fileWriter(note, date);
+			noteRepository.save(note);
+			return "redirect:/";
+		}
 	}
-	
+
 	
 	/**
 	 * This method shows a Note
